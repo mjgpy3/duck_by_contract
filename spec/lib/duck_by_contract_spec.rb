@@ -48,6 +48,15 @@ describe DuckByContract do
 
               specify { expect { subject }.to raise_error(DuckByContract::NotADuck) }
             end
+
+            context 'and the passed object meets all of the duck typed methods' do
+              let(:value) { 42 }
+
+              it { is_expected.to be_ok }
+              it 'returns the calculated result' do
+                expect(subject).to be(84)
+              end
+            end
           end
         end
       end
