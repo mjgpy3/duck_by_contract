@@ -16,40 +16,58 @@ describe DuckByContract do
 
     context 'and uses it to duck type a method with one param' do
 
-      let(:extending_class) do
-        Class.new do
-          extend DuckByContract
+      context 'that has multiple duck methods' do
+        let(:extending_class) do
+          Class.new do
+            extend DuckByContract
 
-          def absolute_value(number)
-            number.abs
+            def absolute_value(number)
+              number + number.abs
+            end
+
+            duck_type absolute_value: [:abs, :+]
           end
-
-          duck_type absolute_value: [:abs]
         end
+
+        it { is_expected.to be_ok }
       end
 
-      it { is_expected.to be_ok }
+      context 'that has one duck method' do
+        let(:extending_class) do
+          Class.new do
+            extend DuckByContract
 
-      describe 'an instance of that class' do
-        let(:an_instance) { extending_class.new }
-
-        context 'when the duck-typed method is called' do
-          subject { an_instance.absolute_value(value) }
-
-          context 'and the passed object meets the specified duck type' do
-            let(:value) { -42 }
-
-            it { is_expected.to be_ok }
-
-            it 'returns the calculated result' do
-              expect(subject).to be(42)
+            def absolute_value(number)
+              number.abs
             end
+
+            duck_type absolute_value: [:abs]
           end
+        end
 
-          context 'and the passed object does not meed the specified duck type' do
-            let(:value) { "foobar" }
+        it { is_expected.to be_ok }
 
-            specify { expect { subject }.to raise_error(DuckByContract::NotADuck) }
+        describe 'an instance of that class' do
+          let(:an_instance) { extending_class.new }
+
+          context 'when the duck-typed method is called' do
+            subject { an_instance.absolute_value(value) }
+
+            context 'and the passed object meets the specified duck type' do
+              let(:value) { -42 }
+
+              it { is_expected.to be_ok }
+
+              it 'returns the calculated result' do
+                expect(subject).to be(42)
+              end
+            end
+
+            context 'and the passed object does not meed the specified duck type' do
+              let(:value) { "foobar" }
+
+              specify { expect { subject }.to raise_error(DuckByContract::NotADuck) }
+            end
           end
         end
       end
