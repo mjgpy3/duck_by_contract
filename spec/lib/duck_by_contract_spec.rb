@@ -16,6 +16,47 @@ describe DuckByContract do
 
     context 'and uses it to duck type a method with one param' do
 
+      context 'that has a multiple param duck-typed method' do
+        let(:extending_class) do
+          Class.new do
+            extend DuckByContract
+
+            def absolute_value(number, string)
+              number + string.to_i
+            end
+
+            duck_type absolute_value: [
+              [:+],
+              [:to_i]
+            ]
+          end
+        end
+
+        describe 'an instance of that class' do
+          let(:an_instance) { extending_class.new }
+
+          context 'when the duck-typed method is called' do
+            subject { an_instance.absolute_value(num_value, str_value) }
+
+            context 'and the first param conforms to its duck type' do
+              let(:num_value) { 42 }
+
+              context 'as does the second' do
+                let(:str_value) { '42' }
+
+                it { is_expected.to be_ok }
+              end
+
+              context 'and the second param does not' do
+                let(:str_value) { Object.new }
+
+                specify { expect { subject }.to raise_error(DuckByContract::NotADuck) }
+              end
+            end
+          end
+        end
+      end
+
       context 'that has multiple duck methods' do
         let(:extending_class) do
           Class.new do
@@ -53,6 +94,7 @@ describe DuckByContract do
               let(:value) { 42 }
 
               it { is_expected.to be_ok }
+
               it 'returns the calculated result' do
                 expect(subject).to be(84)
               end
