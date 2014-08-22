@@ -6,7 +6,7 @@ module DuckByContract
     duck_methods = type_hash.values.first
 
     define_method method_name do |*args|
-      raise NotADuck if duck_methods.select { |m| !args.first.methods.include?(m) }.any?
+      raise NotADuck if duck_methods.any? { |m| !args.first.methods.include?(m) }
       old_method.bind(self).call(*args)
     end
   end
