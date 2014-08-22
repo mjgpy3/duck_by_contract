@@ -8,7 +8,9 @@ Gem::Specification.new do |s|
   s.date = '2014-08-22'
   s.summary = 'Duck-typed interfaces for Ruby!'
   s.description = 'Your wildest dreams have come true! Duck-typed interfaces in Ruby!'
-  s.files = ['README.md']
+  s.files = ['README.md',
+             './lib/duck_by_contract.rb',
+             './spec/lib/duck_by_contract_spec.rb']
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'rake'
