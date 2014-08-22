@@ -33,14 +33,26 @@ describe DuckByContract do
       describe 'an instance of that class' do
         let(:an_instance) { extending_class.new }
 
-        context 'when the duck-typed method is called with an object matching the specified duck type' do
-          subject { an_instance.absolute_value(42) }
+        context 'when the duck-typed method is called' do
+          subject { an_instance.absolute_value(value) }
 
-          it { is_expected.to be_ok }
+          context 'and the passed object meets the specified duck type' do
+            let(:value) { -42 }
+
+            it { is_expected.to be_ok }
+
+            it 'returns the calculated result' do
+              expect(subject).to be(42)
+            end
+          end
+
+          context 'and the passed object does not meed the specified duck type' do
+            let(:value) { "foobar" }
+
+            specify { expect { subject }.to raise_error(DuckByContract::NotADuck) }
+          end
         end
       end
     end
-
   end
-
 end
