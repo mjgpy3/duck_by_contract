@@ -1,6 +1,6 @@
 module DuckByContract
 
-  def self.duck_type
+  def duck_type
   end
 
 end
