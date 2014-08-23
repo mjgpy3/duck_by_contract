@@ -18,6 +18,29 @@ The `duck_type_with_default` method can also be used to provide a block specifyi
 
 If you need more info, see the examples below.
 
+## Default behavior example:
+```
+require 'duck_by_contract'
+
+class Persistor
+  extend DuckByContract
+
+  def persist(readable, db)
+    db.save(readable.read)
+  end
+
+  duck_type_with_default persist: [
+    [:read], [:save]
+  ] do |maybe_readable, maybe_db|
+    raise "#{maybe_readable.inspect} or #{maybe_db.inspect} failed to meet it's contract in #persist"
+  end
+end
+
+saver = Persistor.new
+saver.persist("42", Object.new)
+# => RuntimeError: 42 or #<Object:0x92d5ad8> failed to meet it's contract in #persist
+```
+
 ## Basic usage example:
 ```
 require 'duck_by_contract'
