@@ -1,4 +1,4 @@
-% duck_by_contract
+# duck_by_contract
 
 Duck-typed interfaces in ruby...
 
