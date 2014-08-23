@@ -1,5 +1,7 @@
 # duck_by_contract
 
+[![Build Status](https://travis-ci.org/mjgpy3/duck_by_contract.svg?branch=master)](https://travis-ci.org/mjgpy3/duck_by_contract)
+
 Duck-typed interfaces for ruby.
 
 ## What is it really?
