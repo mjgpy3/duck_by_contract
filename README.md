@@ -8,6 +8,12 @@ Duck-typed interfaces for ruby.
 
 It's a way to ensure that paramters respond to specific messages before heavy-lifting is done in a method.
 
+## Why add the overhead?
+
+2 reasons really:
+ 1. Some methods have a lot of heavy-lifting (e.g. database/network transactions). Sometimes these transactions can go through then be "broker" because a later statement calls a method that does not exist. This is a short circuit mechanism.
+ 2. Timid code (i.e. code including a lot of `#is_a?`, `#respond_to?`, `#nil?`, etc...) is ugly and causes methods to become bloated. This gem provides a way to ensure parameters have expected behaviors _without_ convolution, and it also provides a mechanism (`duck_type_with_default`) to provide default behavior when interface parameters are not met.
+
 ## How do I use it?
 
 To use it simply have your class extend `DuckByContract` (when the gem is required/installed).
