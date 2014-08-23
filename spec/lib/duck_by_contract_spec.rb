@@ -14,6 +14,32 @@ describe DuckByContract do
 
     it { is_expected.to respond_to(:duck_type) }
 
+    context 'and uses it to duck type a method with one param, providing a default' do
+      let(:extending_class) do
+        Class.new do
+          extend DuckByContract
+
+          def say_name(thing)
+            puts thing.name
+          end
+
+          duck_type_with_default say_name: [:name] do
+            :default
+          end
+        end
+      end
+
+      describe 'an instance of that class' do
+        let(:an_instance) { extending_class.new }
+
+        context 'when the duck-typed method is called with a param that does not meet the interface' do
+          subject { an_instance.say_name(Object.new) }
+
+          it { is_expected.to be(:default) }
+        end
+      end
+    end
+
     context 'and uses it to duck type a method with one param' do
 
       context 'that has a multiple param duck-typed method' do
