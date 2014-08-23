@@ -38,7 +38,7 @@ class Persistor
   duck_type_with_default persist: [
     [:read], [:save]
   ] do |maybe_readable, maybe_db|
-    raise "#{maybe_readable.inspect} or #{maybe_db.inspect} failed to meet it's contract in #persist"
+    raise "#{maybe_readable.inspect} or #{maybe_db.inspect} failed to meet its contract in #persist"
   end
 end
 
