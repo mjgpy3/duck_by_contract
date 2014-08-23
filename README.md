@@ -2,10 +2,22 @@
 
 Duck-typed interfaces for ruby.
 
-A way to ensure that values passed to methods have expected behaviors.
+## What is it really?
 
-Basic usage example:
+It's a way to ensure that paramters respond to specific messages before heavy-lifting is done in a method.
+
+## How do I use it?
+
+To use it simple have your class extend `DuckByContract` (when the gem is required/installed).
+
+Then call `duck_type` in the body of your class, giving it a hash where the key is the name of the method that you want to explicitely interface and the paramter is an array of arrays of method names (or just an array if the method only accepts parameter).
+
+If you need more info, see the examples below.
+
+## Basic usage example:
 ```
+require 'duck_by_contract'
+
 class Horse
   extend DuckByContract
 
