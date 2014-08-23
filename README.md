@@ -10,9 +10,11 @@ It's a way to ensure that paramters respond to specific messages before heavy-li
 
 ## How do I use it?
 
-To use it simple have your class extend `DuckByContract` (when the gem is required/installed).
+To use it simply have your class extend `DuckByContract` (when the gem is required/installed).
 
-Then call `duck_type` in the body of your class, giving it a hash where the key is the name of the method that you want to explicitely interface and the paramter is an array of arrays of method names (or just an array if the method only accepts parameter).
+Then call `duck_type` in the body of your class, giving it a hash where the key is the name of the method that you want to explicitly interface and the parameter is an array of arrays of method names (or just an array if the method only accepts parameter).
+
+The `duck_type_with_default` method can also be used to provide a block specifying how a method ought to behave if parameter's duck-types do not align
 
 If you need more info, see the examples below.
 
